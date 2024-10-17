@@ -1,0 +1,24 @@
+<launch>
+
+    <arg name="UAV_NAME" default="$(optenv UAV_NAME)" />
+    <arg name="device" default="/dev/openmv_down" />
+    <arg name="image" default="image_raw" />
+    <arg name="camera" default="camera_info" />
+    <arg name="calibration" default="$(find openmv_cam)/calib/standard_lens.yaml" />
+
+    <group ns="$(arg UAV_NAME)">
+	    <group ns="openmv_cam_down">
+
+		<node pkg="openmv_cam" name="openmv_cam_down" type="openmv_cam_node.py" output="screen">
+		    <param name="device" value="$(arg device)" />
+		    <param name="image" value="$(arg image)" />
+		    <param name="camera" value="$(arg camera)" />
+		    <param name="calibration" value="$(arg calibration)" />
+		</node>
+
+		<node pkg="image_proc" name="image_proc_down" type="image_proc" />
+
+	    </group>
+    </group>
+
+</launch>
